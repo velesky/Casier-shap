@@ -1,254 +1,50 @@
-##### WIP #####
-#LAST UPDATE : 12/07/2025
+# Casier Chap 🍻
 
-# CONTEXT WORKFLOW - AI-Powered Development Framework
+**Casier Chap** est une application Flutter premium, 100% offline, conçue pour la gestion simplifiée de stocks et de ventes pour les commerces de proximité (maquis, boutiques, etc.) en Côte d'Ivoire.
 
-A comprehensive workflow system that transforms Product Requirements Documents (PRDs) into actionable implementation plans using AI assistance.
+## 🚀 Fonctionnalités
 
-## 🎯 What is Context Workflow?
+- **Tableau de Bord Dynamique** : Visualisation en temps réel de la valeur totale du stock et des alertes critiques.
+- **Gestion d'Inventaire** : Suivi précis des produits, filtrage par catégorie et recherche instantanée.
+- **Déclaration de Ventes Ultra-Rapide** : Interface optimisée avec boutons d'ajout rapide (+1, +5, +10) pour une utilisation à une main.
+- **Historique & Rapports** : Suivi détaillé des transactions passées avec calcul automatique des marges bénéficiaires.
+- **Partage WhatsApp** : Génération automatique de rapports de ventes quotidiens formatés pour un partage facile via WhatsApp.
 
-Context Workflow is a structured approach to software development that:
+## 🎨 Design & UX
 
-- **Transforms ideas into action** - Convert PRDs into detailed implementation plans
-- **Ensures consistency** - Maintain project standards across all development phases
-- **Accelerates development** - Leverage AI to generate comprehensive technical documentation
-- **Prevents common issues** - Built-in best practices and error tracking
+- **Dark Mode Premium** : Une interface sombre élégante pour minimiser la fatigue visuelle.
+- **Glassmorphism** : Utilisation d'effets de transparence modernes pour un look "state-of-the-art".
+- **Identité Visuelle** : Accents orange vibrant (#FF7A00) pour une navigation intuitive.
+- **Usage à une main** : Ergonomie pensée pour une saisie rapide en fin de journée.
 
-## 🚀 Quick Start Guide
+## 🛠️ Stack Technique
 
-### Step 1: Define Your Project
+- **Framework** : Flutter (3.24+)
+- **Gestion d'État** : Riverpod
+- **Base de Données Locale** : Hive (NoSQL ultra-rapide, 100% hors-ligne)
+- **Navigation** : GoRouter
+- **Partage** : Share Plus
 
-**Fill out the PRD.md file**
+## 📦 Installation & Lancement
 
-- Describe your project vision and objectives
-- List core features and requirements
-- Define success metrics and constraints
-- Use the provided template and examples
+1. **Prérequis** : Assurez-vous d'avoir Flutter installé sur votre machine.
+2. **Clonage du dépôt** :
+   ```bash
+   git clone https://github.com/velesky/Casier-shap.git
+   cd casier_chap
+   ```
+3. **Installation des dépendances** :
+   ```bash
+   flutter pub get
+   ```
+4. **Lancement** :
+   ```bash
+   flutter run
+   ```
 
-### Step 2: Customize Your Standards
+## 📝 Auteur
 
-**Review and adapt these files to your project needs:**
-
-📁 **Project_structure.md**
-
-- Modify folder organization patterns
-- Adapt to your tech stack (React, Vue, Angular, etc.)
-- Update file naming conventions
-
-🎨 **UI_UX_doc.md**
-
-- Customize color palettes and design tokens
-- Add your brand guidelines
-- Modify component patterns for your design system
-
-🐛 **bugs_tracking.md** _(optional)_
-
-- Adapt bug reporting templates
-- Customize priority levels and categories
-- Add project-specific debugging tools
-
-### Step 3: Configure AI Rules
-
-**Check and adapt the workflow rules:**
-
-- Review `.cursor/rules/workflow.mdc`
-- Update if you changed project structure
-- Ensure rules match your development preferences
-
-### Step 4: Generate Implementation Plan
-
-**Use your AI model to create the implementation roadmap:**
-
-```
-Prompt: "Generate the Implementation.md file using the generate.mdc rules"
-```
-
-The AI will analyze your PRD and create:
-
-- ✅ Feature breakdown and prioritization
-- 🛠️ Technology stack recommendations
-- 📋 Stage-by-stage implementation plan
-- 🎯 Success metrics and testing guidelines
-
-### Step 5: Start Development
-
-**Begin coding with your AI assistant:**
-
-```
-Prompt: "Let's start with Stage 1 of the implementation plan"
-```
-
-## 📋 Alternative: Lite Version
-
-For beginners or simpler projects, use the lite version:
-
-1. Rename `generate-lite-version.mdc` to `generate.mdc`
-2. This version provides:
-   - Simplified instructions
-   - More guidance for beginners
-   - Streamlined decision-making process
-
-## 🔄 Workflow Overview
-
-```mermaid
-graph TD
-    A[📝 Fill PRD.md] --> B[⚙️ Customize Standards]
-    B --> C[🔧 Configure AI Rules]
-    C --> D[🤖 Generate Implementation]
-    D --> E[💻 Start Development]
-    E --> F[🐛 Track Issues]
-    F --> G[🚀 Deploy & Monitor]
-```
-
-## 📁 Project Structure
-
-```
-CONTEXT_WORKFLOW/
-├── 📄 PRD.md                    # Product Requirements Document
-├── 📄 README.md                 # This file
-├── 📁 Documentations/
-│   ├── 📄 Implementation.md     # Generated implementation plan
-│   ├── 📄 Project_structure.md  # Folder organization guide
-│   ├── 📄 UI_UX_doc.md         # Design system documentation
-│   └── 📄 bugs_tracking.md     # Bug tracking templates
-└── 📁 .cursor/rules/
-    ├── 📄 generate.mdc          # AI generation rules
-    └── 📄 generate-lite-version.mdc # Simplified version
-```
-
-## 🎯 Key Benefits
-
-### For Developers
-
-- **Faster project setup** - Skip the planning phase confusion
-- **Consistent code quality** - Built-in best practices
-- **Better documentation** - Auto-generated, comprehensive guides
-- **Reduced debugging time** - Structured error tracking
-
-### For Teams
-
-- **Shared understanding** - Clear project vision and standards
-- **Scalable processes** - Works for small projects to enterprise apps
-- **Knowledge retention** - Document decisions and solutions
-- **Onboarding efficiency** - New team members get up to speed quickly
-
-### For Project Managers
-
-- **Clear milestones** - Stage-by-stage implementation tracking
-- **Risk mitigation** - Identify potential issues early
-- **Resource planning** - Realistic timelines and requirements
-- **Quality assurance** - Built-in testing and validation steps
-
-## 🛠️ Supported Technologies
-
-The workflow is flexible and supports various tech stacks:
-
-### Frontend
-
-- ⚛️ React (Next.js, Vite, CRA)
-- 🖖 Vue.js (Nuxt.js, Vite)
-- 🅰️ Angular
-- 📱 React Native / Flutter
-  ......
-
-### Backend
-
-- 🟢 Node.js (Express, Fastify, NestJS)
-- 🐍 Python (Django, FastAPI, Flask)
-- ☕ Java (Spring Boot)
-- 🦀 Rust (Axum, Actix)
+Développeur : **Velesky**
 
 ---
-
-### Databases
-
-- 🐘 PostgreSQL
-- 🍃 MongoDB
-- 🔥 Firebase
-- 🏠 SQLite
-  .....
-
-## 📚 Documentation Files Explained
-
-### 📄 PRD.md
-
-**Your project's foundation**
-
-- Project vision and objectives
-- Feature requirements and priorities
-- Success metrics and constraints
-- Target audience and use cases
-
-### 📄 Implementation.md
-
-**Generated roadmap** (created by AI)
-
-- Technology stack selection
-- Feature breakdown by priority
-- Stage-by-stage development plan
-- Testing and deployment guidelines
-
-### 📄 Project_structure.md
-
-**Code organization guide**
-
-- Folder structure examples
-- File naming conventions
-- Import/export patterns
-- Best practices for scalability
-
-### 📄 UI_UX_doc.md
-
-**Design system documentation**
-
-- Color palettes and typography
-- Component design patterns
-- Responsive design guidelines
-- Accessibility standards
-
-### 📄 bugs_tracking.md
-
-**Issue management system**
-
-- Bug reporting templates
-- Priority and category definitions
-- Solution documentation
-- Prevention strategies
-
-## 🤖 AI Integration Tips
-
-### Best Prompts for Generation
-
-```
-✅ Good: "Generate Implementation.md using the PRD and project structure guidelines"
-❌ Avoid: "Make me a plan"
-
-✅ Good: "Start Stage 1 implementation focusing on authentication setup"
-❌ Avoid: "Code something"
-```
-
-### Effective AI Collaboration
-
-WIP
-
-## 🚨 Common Issues & Solutions
-
-WIP
-
-## 🔧 Customization Guide
-
-WIP
-
-## 🏁 Ready to Start?
-
-1. **Clone this repository**
-2. **Fill out PRD.md** with your project details
-3. **Customize the documentation files** to match your needs
-4. **Generate your implementation plan** using AI
-5. **Start coding** with confidence!
-
-**Happy coding! 🚀**
-
----
-
-EYS
+*Fait avec ❤️ pour simplifier le quotidien des gérants.*
