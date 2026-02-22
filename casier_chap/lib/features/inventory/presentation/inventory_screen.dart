@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme/colors.dart';
 import '../../../shared/widgets/glass_card.dart';
 import '../providers/inventory_provider.dart';
@@ -16,6 +17,16 @@ class InventoryScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mes Produits'),
+        actions: [
+          IconButton(
+            onPressed: () => context.push('/inventory/add'),
+            icon: const Icon(
+              Icons.add_circle_outline_rounded,
+              color: AppColors.primaryOrange,
+            ),
+            tooltip: 'Ajouter un produit',
+          ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(80),
           child: Padding(
@@ -104,94 +115,108 @@ class _ProductCard extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
-      child: GlassCard(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            // Realistic Image Placeholder
-            Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                color: Colors.white12,
-                borderRadius: BorderRadius.circular(12),
+      child: GestureDetector(
+        onTap: () => context.push('/inventory/edit/${product.id}'),
+        child: GlassCard(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              // Realistic Image Placeholder
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.white12,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.local_drink_rounded,
+                  color: AppColors.primaryOrange,
+                ),
               ),
-              child: const Icon(
-                Icons.local_drink_rounded,
-                color: AppColors.primaryOrange,
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      product.category,
+                      style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${product.salePrice.toInt()} FCFA',
+                      style: const TextStyle(
+                        color: AppColors.primaryOrange,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    product.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                  if (isCritical)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.critical.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Text(
+                        'ALERTE',
+                        style: TextStyle(
+                          color: AppColors.critical,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Text(
+                        '${product.stockQuantity}',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: isCritical
+                              ? AppColors.critical
+                              : AppColors.success,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(
+                        Icons.chevron_right_rounded,
+                        color: AppColors.textSecondary,
+                      ),
+                    ],
                   ),
-                  Text(
-                    product.category,
-                    style: const TextStyle(
+                  const Text(
+                    'en stock',
+                    style: TextStyle(
+                      fontSize: 10,
                       color: AppColors.textSecondary,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${product.salePrice.toInt()} FCFA',
-                    style: const TextStyle(
-                      color: AppColors.primaryOrange,
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                if (isCritical)
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.critical.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Text(
-                      'ALERTE',
-                      style: TextStyle(
-                        color: AppColors.critical,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                const SizedBox(height: 8),
-                Text(
-                  '${product.stockQuantity}',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: isCritical ? AppColors.critical : AppColors.success,
-                  ),
-                ),
-                const Text(
-                  'en stock',
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

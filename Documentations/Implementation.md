@@ -60,48 +60,48 @@
 **Durée estimée :** 4-6 heures  
 **Dépendances :** Aucune
 
-- [ ] Créer le projet Flutter
-- [ ] Configurer `pubspec.yaml` (Riverpod, Hive, google_fonts, share_plus, etc.)
-- [ ] Mettre en place le Design System complet (theme, colors, glassmorphism)
-- [ ] Créer toute la structure de dossiers selon `Project_structure.md`
-- [ ] Ajouter les assets (`images/products/` + logo via Stitch)
-- [ ] Initialiser Hive + adapters
-- [ ] Configurer Riverpod providers de base
+- [okeuu] Créer le projet Flutter
+- [okeuu] Configurer `pubspec.yaml` (Riverpod, Hive, google_fonts, share_plus, etc.)
+- [okeuu] Mettre en place le Design System complet (theme, colors, glassmorphism)
+- [okeuu] Créer toute la structure de dossiers selon `Project_structure.md`
+- [okeuu] Ajouter les assets (`images/products/` + logo via Stitch)
+- [okeuu] Initialiser Hive + adapters
+- [okeuu] Configurer Riverpod providers de base
 
 ### Stage 2: Core UI & Navigation
 
 **Durée estimée :** 6-8 heures  
 **Dépendances :** Stage 1 terminé
 
-- [ ] Générer avec **Stitch** le Splash Screen + logo
-- [ ] Générer avec **Stitch** le style global (glassmorphism, orange #FF7A00)
-- [ ] Implémenter Bottom Navigation + FAB central orange
-- [ ] Mettre en place routing (GoRouter)
-- [ ] Créer les 5 écrans vides avec Scaffold et thème
-- [ ] Appliquer Inter font partout
+- [okeuu] Générer avec **Stitch** le Splash Screen + logo
+- [okeuu] Générer avec **Stitch** le style global (glassmorphism, orange #FF7A00)
+- [okeuu] Implémenter Bottom Navigation + FAB central orange
+- [okeuu] Mettre en place routing (GoRouter)
+- [okeuu] Créer les 5 écrans vides avec Scaffold et thème
+- [okeuu] Appliquer Inter font partout
 
 ### Stage 3: Core Screens & Features
 
 **Durée estimée :** 12-16 heures  
 **Dépendances :** Stage 2 terminé
 
-- [ ] Générer avec **Stitch** le Dashboard complet → implémenter
-- [ ] Générer avec **Stitch** Mes Produits → implémenter
-- [ ] Générer avec **Stitch** Déclarer Ventes du Jour (presets + total live) → implémenter
-- [ ] Générer avec **Stitch** Résumé de la Journée (hero + WhatsApp) → implémenter
-- [ ] Créer modèles Hive (Product, DailySale)
-- [ ] Implémenter logique calcul caisse / marge / mise à jour stock
+- [okeuu] Générer avec **Stitch** le Dashboard complet → implémenter
+- [ ] Générer avec **Stitch** Mes Produits (liste + recherche + édition) → implémenter
+- [okeuu] Générer avec **Stitch** Déclarer Ventes du Jour (presets + total live) → implémenter
+- [okeuu] Générer avec **Stitch** Résumé de la Journée (hero + WhatsApp) → implémenter
+- [okeuu] Créer modèles Hive (Product, DailySale)
+- [okeuu] Implémenter logique calcul caisse / marge / mise à jour stock
 
 ### Stage 4: Offline Logic & Polish
 
 **Durée estimée :** 8-10 heures  
 **Dépendances :** Stage 3 terminé
 
-- [ ] Persistance complète avec Hive
-- [ ] Historique 7 jours
-- [ ] Badges stock dynamiques
-- [ ] Confirmation dialog avant validation journée
-- [ ] Micro-interactions et animations
+- [/] Persistance complète avec Hive
+- [/] Historique 7 jours
+- [/] Badges stock dynamiques
+- [okeuu] Confirmation dialog avant validation journée
+- [/] Micro-interactions et animations
 - [ ] Optimisation performance et taille APK
 
 ### Stage 5: Testing on Android Studio Emulator
@@ -109,11 +109,11 @@
 **Durée estimée :** 6-8 heures  
 **Dépendances :** Stage 4 terminé
 
-- [ ] Tester tous les écrans sur émulateur Android Studio (Android 8.0+ et 14)
-- [ ] Vérifier usage à une main et vitesse
-- [ ] Tester partage WhatsApp
+- [/] Tester tous les écrans sur émulateur Android Studio (Android 8.0+ et 14)
+- [/] Vérifier usage à une main et vitesse
+- [/] Tester partage WhatsApp
 - [ ] Valider taille APK < 15 Mo
-- [ ] Mettre à jour `Bug_tracking.md`
+- [/] Mettre à jour `Bug_tracking.md`
 - [ ] Préparer screenshots pour Play Store
 
 **Durée totale estimée MVP Frontend :** 36-48 heures (1 développeur + Antigravity/Stitch)
