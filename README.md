@@ -78,4 +78,4 @@ Développeur : **Velesky**
 
 ---
 
-*Fait avec ❤️ pour simplifier le quotidien des gérants en Côte d'Ivoire 🇨🇮*
+> *Fait avec ❤️ pour simplifier le quotidien des gérants en Côte d'Ivoire 🇨🇮*
