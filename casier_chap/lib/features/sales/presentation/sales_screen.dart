@@ -113,13 +113,19 @@ class SalesScreen extends ConsumerWidget {
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:
                                             AppColors.primaryOrange,
+                                        foregroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                             12,
                                           ),
                                         ),
                                       ),
-                                      child: const Text('Confirmer'),
+                                      child: const Text(
+                                        'Confirmer',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),

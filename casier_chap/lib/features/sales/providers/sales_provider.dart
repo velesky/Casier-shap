@@ -42,7 +42,7 @@ class SalesNotifier extends StateNotifier<Map<String, int>> {
     return total;
   }
 
-  Future<void> saveAndShare() async {
+  Future<void> saveSales() async {
     if (state.isEmpty) return;
 
     final date = DateTime.now();
@@ -58,9 +58,18 @@ class SalesNotifier extends StateNotifier<Map<String, int>> {
       totalMarge: totalMarge,
     );
 
-    // Persist to Hive
+    // Persist to Hive (use put to update existing day or create new)
     final box = Hive.box<DailySale>('sales');
-    await box.put(saleId, dailySale);
+    final existing = box.get(saleId);
+
+    if (existing != null) {
+      // Merge sales if same day?
+      // For simplicity in this MVP, we replace or append.
+      // The user usually does one big report.
+      await box.put(saleId, dailySale);
+    } else {
+      await box.put(saleId, dailySale);
+    }
 
     // Decrement inventory stock
     final inventoryNotifier = _ref.read(inventoryProvider.notifier);
@@ -80,7 +89,17 @@ class SalesNotifier extends StateNotifier<Map<String, int>> {
       await inventoryNotifier.updateProduct(updatedProduct);
     }
 
-    // Prepare WhatsApp Message
+    // Clear current sales state
+    state = {};
+  }
+
+  Future<void> saveAndShare() async {
+    if (state.isEmpty) return;
+
+    final date = DateTime.now();
+    final totalCaisse = calculateTotalCaisse();
+
+    // Prepare WhatsApp Message before clearing state
     final formattedDate = DateFormat('dd/MM/yyyy').format(date);
     String message = '*RAPPORT DE VENTES - $formattedDate* 🍻\n\n';
 
@@ -92,10 +111,11 @@ class SalesNotifier extends StateNotifier<Map<String, int>> {
 
     message += '\n💰 *TOTAL CAISSE : ${totalCaisse.toInt()} FCFA*';
 
-    await Share.share(message);
+    // Save data
+    await saveSales();
 
-    // Clear current sales state
-    state = {};
+    // Share
+    await Share.share(message);
   }
 }
 
