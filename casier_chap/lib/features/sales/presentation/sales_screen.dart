@@ -86,14 +86,44 @@ class SalesScreen extends ConsumerWidget {
                       onPressed: salesState.isEmpty
                           ? null
                           : () {
-                              ref
-                                  .read(salesProvider.notifier)
-                                  .saveAndShare()
-                                  .then((_) {
-                                    if (context.mounted) {
-                                      context.pop();
-                                    }
-                                  });
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  backgroundColor: AppColors.surface,
+                                  title: const Text('Confirmer les ventes ?'),
+                                  content: const Text(
+                                    'Cela mettra à jour votre stock de produits de manière permanente.',
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text(
+                                        'Annuler',
+                                        style: TextStyle(color: Colors.white70),
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context); // Close dialog
+                                        context.push('/sales/summary');
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            AppColors.primaryOrange,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Text('Confirmer'),
+                                    ),
+                                  ],
+                                ),
+                              );
                             },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryOrange,

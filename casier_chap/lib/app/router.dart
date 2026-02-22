@@ -5,34 +5,17 @@ import '../features/dashboard/presentation/splash_screen.dart';
 import '../features/dashboard/presentation/dashboard_screen.dart';
 import '../features/inventory/presentation/inventory_screen.dart';
 import '../features/sales/presentation/sales_screen.dart';
+import '../features/sales/presentation/summary_screen.dart';
 import '../features/history/presentation/history_screen.dart';
 import 'main_scaffold.dart';
-
-// Placeholder screens
-class PlaceholderScreen extends StatelessWidget {
-  final String title;
-  const PlaceholderScreen({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(child: Text(title, style: const TextStyle(fontSize: 24))),
-    );
-  }
-}
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/',
     routes: [
-      // Splash screen is outside the shell
       GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
-      // ShellRoute for persistent navigation
       ShellRoute(
-        builder: (context, state, child) {
-          return MainScaffold(child: child);
-        },
+        builder: (context, state, child) => MainScaffold(child: child),
         routes: [
           GoRoute(
             path: '/dashboard',
@@ -49,12 +32,20 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/profile',
             builder: (context, state) =>
-                const PlaceholderScreen(title: 'Profil'),
+                const Scaffold(body: Center(child: Text('Profil (À venir)'))),
           ),
         ],
       ),
-      // Sales screen (Declare Sales)
-      GoRoute(path: '/sales', builder: (context, state) => const SalesScreen()),
+      GoRoute(
+        path: '/sales',
+        builder: (context, state) => const SalesScreen(),
+        routes: [
+          GoRoute(
+            path: 'summary',
+            builder: (context, state) => const SummaryScreen(),
+          ),
+        ],
+      ),
     ],
   );
 });
