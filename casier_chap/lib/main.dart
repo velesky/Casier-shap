@@ -8,14 +8,14 @@ import 'shared/models/daily_sale.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialisation de Hive
+  // Initialize Hive
   await Hive.initFlutter();
 
-  // Enregistrement des adapters
+  // Register adapters
   Hive.registerAdapter(ProductAdapter());
   Hive.registerAdapter(DailySaleAdapter());
 
-  // Ouverture des boxes
+  // Open boxes
   await Hive.openBox<Product>('products');
   await Hive.openBox<DailySale>('sales');
   await Hive.openBox('settings');

@@ -23,13 +23,12 @@ class MainScaffold extends ConsumerWidget {
 
     return Scaffold(
       body: child,
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/sales'),
-        label: const Text(
-          'Déclarer ventes',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        icon: const Icon(Icons.add_rounded),
+        backgroundColor: AppColors.primaryOrange,
+        foregroundColor: Colors.white,
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add_shopping_cart_rounded, size: 28),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -37,23 +36,38 @@ class MainScaffold extends ConsumerWidget {
         shape: const CircularNotchedRectangle(),
         notchMargin: 12.0,
         child: SizedBox(
-          height: 64,
+          height: 70,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _NavBarItem(
-                icon: Icons.grid_view_rounded,
+                icon: Icons.home_rounded,
                 label: 'Accueil',
                 isSelected: calculateSelectedIndex() == 0,
                 onTap: () => context.go('/dashboard'),
               ),
               _NavBarItem(
                 icon: Icons.inventory_2_rounded,
-                label: 'Stock',
+                label: 'Produits',
                 isSelected: calculateSelectedIndex() == 1,
                 onTap: () => context.go('/inventory'),
               ),
-              const SizedBox(width: 80), // Space for FAB
+              // Space for FAB area with label
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 32),
+                  Text(
+                    'Ventes',
+                    style: TextStyle(
+                      color: location == '/sales'
+                          ? AppColors.primaryOrange
+                          : AppColors.textSecondary,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
               _NavBarItem(
                 icon: Icons.history_rounded,
                 label: 'Historique',

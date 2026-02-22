@@ -31,7 +31,7 @@ class InventoryNotifier extends StateNotifier<List<Product>> {
     state = state.where((p) => p.id != id).toList();
   }
 
-  // Initialisation des produits de démo si la base est vide
+  // Seed default products for demonstration if empty
   Future<void> seedInitialData() async {
     if (_box.isEmpty) {
       final initialProducts = [

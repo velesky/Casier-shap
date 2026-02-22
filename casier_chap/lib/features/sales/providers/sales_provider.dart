@@ -58,11 +58,11 @@ class SalesNotifier extends StateNotifier<Map<String, int>> {
       totalMarge: totalMarge,
     );
 
-    // Persistance dans Hive
+    // Persist to Hive
     final box = Hive.box<DailySale>('sales');
     await box.put(saleId, dailySale);
 
-    // Diminuer le stock dans l'inventaire
+    // Decrement inventory stock
     final inventoryNotifier = _ref.read(inventoryProvider.notifier);
     final inventory = _ref.read(inventoryProvider);
     for (final entry in state.entries) {
@@ -80,7 +80,7 @@ class SalesNotifier extends StateNotifier<Map<String, int>> {
       await inventoryNotifier.updateProduct(updatedProduct);
     }
 
-    // Préparation du message WhatsApp
+    // Prepare WhatsApp Message
     final formattedDate = DateFormat('dd/MM/yyyy').format(date);
     String message = '*RAPPORT DE VENTES - $formattedDate* 🍻\n\n';
 
@@ -94,7 +94,7 @@ class SalesNotifier extends StateNotifier<Map<String, int>> {
 
     await Share.share(message);
 
-    // Réinitialiser les ventes en cours
+    // Clear current sales state
     state = {};
   }
 }

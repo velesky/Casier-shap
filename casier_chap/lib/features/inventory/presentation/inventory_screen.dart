@@ -108,7 +108,7 @@ class _ProductCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            // Image du produit (Icône par défaut)
+            // Realistic Image Placeholder
             Container(
               width: 60,
               height: 60,
