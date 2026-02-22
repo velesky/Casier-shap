@@ -1,0 +1,32 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          
+      - name: Install dependencies
+        run: cd casier_chap && flutter pub get
+        
+      - name: Verify formatting
+        run: cd casier_chap && flutter format --set-exit-if-changed .
+        
+      - name: Analyze project source
+        run: cd casier_chap && flutter analyze
+        
+      - name: Run tests
+        run: cd casier_chap && flutter test
