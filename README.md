@@ -19,6 +19,7 @@
 ## 🎨 Design & UX
 
 L'application suit une philosophie de design moderne et intuitive :
+
 - **Dark Mode Premium** : Une interface sombre élégante pour minimiser la fatigue visuelle.
 - **Glassmorphism** : Utilisation d'effets de transparence modernes pour un look "state-of-the-art".
 - **Identité Visuelle** : Accents orange vibrant (#FF7A00) pour une navigation intuitive.
@@ -40,15 +41,20 @@ L'application suit une philosophie de design moderne et intuitive :
 
 1. **Prérequis** : Assurez-vous d'avoir Flutter installé sur votre machine.
 2. **Clonage du dépôt** :
+
    ```bash
    git clone https://github.com/velesky/Casier-shap.git
    cd casier_chap
    ```
+
 3. **Installation des dépendances** :
+
    ```bash
    flutter pub get
    ```
+
 4. **Lancement** :
+
    ```bash
    flutter run
    ```
@@ -69,5 +75,7 @@ Pour plus de détails sur la conception et l'organisation du projet, consultez l
 ## 📝 Auteur
 
 Développeur : **Velesky**
+
+---
 
 *Fait avec ❤️ pour simplifier le quotidien des gérants en Côte d'Ivoire 🇨🇮*
