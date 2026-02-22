@@ -12,7 +12,7 @@ class DashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(inventoryProvider);
 
-    // Calculate metrics
+    // Calcul des indicateurs
     final totalStockValue = products.fold<double>(
       0,
       (sum, p) => sum + (p.stockQuantity * p.salePrice),
@@ -55,7 +55,7 @@ class DashboardScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.displayMedium,
             ),
             const SizedBox(height: 24),
-            // Hero Card for Stock Value
+            // Carte Principale : Valeur du Stock
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(28),
