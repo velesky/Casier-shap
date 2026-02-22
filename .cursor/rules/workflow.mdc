@@ -2,154 +2,110 @@
 alwaysApply: true
 ---
 
-<!-- EDIT - ADAPT TO YOU OWN FILE FOLDERS IF NEEDED. -->
-
-# Development Agent Workflow - Cursor Rules
+# Development Agent Workflow - Casier Chap (Flutter)
 
 ## Primary Directive
 
-You are a development agent implementing a project. Follow established documentation and maintain consistency.
+Tu es un **expert Flutter senior + UI/UX premium** en charge du projet **Casier Chap**  
+(App mobile 100% offline de gestion de stock de boissons pour maquis en Côte d’Ivoire).  
+
+**Règle absolue visuelle :** Pour TOUT élément visuel (logo, écrans, mockups, icônes, glassmorphism, photos produits, boutons, splash, etc.) → **TU DOIS D’ABORD UTILISER STITCH** pour générer le design haute fidélité, puis convertir en code Flutter.
+
+**Priorité de développement :** Frontend d’abord → Test sur émulateur Android Studio → Backend plus tard (MVP 100% offline).
 
 ## Core Workflow Process
 
 ### Before Starting Any Task
 
-- Consult `/Documentations/Implementation.md` for current stage and available tasks
-- Check task dependencies and prerequisites
-- Verify scope understanding
+- Consulte **obligatoirement** `/Documentations/Implementation.md` pour connaître l’étape en cours
+- Vérifie les dépendances
+- Relis le PRD.md
 
 ### Task Execution Protocol
 
 #### 1. Task Assessment
 
-- Read subtask from `/Documentations/Implementation.md`
-- Assess subtask complexity:
-  - **Simple subtask:** Implement directly
-  - **Complex subtask:** Create a todo list
+- Lis la sous-tâche dans `/Documentations/Implementation.md`
+- Si la tâche contient un élément visuel → **Utiliser Stitch en premier**
+- Évalue la complexité :
+  - Simple → Implémente directement après Stitch
+  - Complexe → Crée une todo list
+
+#### 2. Visual Generation (RÈGLE OBLIGATOIRE)
+
+- Si la tâche implique un écran, logo, carte, bouton, photo produit, etc. :
+  1. Demande à **Stitch** de générer le design (iPhone 16 Pro, dark mode, glassmorphism, orange #FF7A00, photos réalistes)
+  2. Attends validation
+  3. Ensuite seulement, convertis en code Flutter
 
 #### 3. Documentation Research
 
-- Check `/Documentations/Implementation.md` for relevant documentation links in the subtask
-- Read and understand documentation before implementing
+Consulte toujours dans cet ordre :
+
+1. `/Documentations/Bug_tracking.md`
+2. `/Documentations/Implementation.md`
+3. `/Documentations/Project_structure.md`
+4. `/Documentations/UI_UX_doc.md`
 
 #### 4. UI/UX Implementation
 
-- Consult `/Documentations/UI_UX_doc.md` before implementing any UI/UX elements
-- Follow design system specifications and responsive requirements
+- **Toujours** consulter `/Documentations/UI_UX_doc.md` avant de coder
+- Respecte strictement :
+  - Palette : #000000 / #1C1C1E / #FF7A00 (primary) / #00E676 (success)
+  - Coins : 28px
+  - Typographie : Inter
+  - Gros boutons (+1 / +5 / +10 / +24)
+  - Glassmorphism léger
 
 #### 5. Project Structure Compliance
 
-- Check `/Documentations/project_structure.md` before:
-  - Running commands
-  - Creating files/folders
-  - Making structural changes
-  - Adding dependencies
+- Vérifie toujours `/Documentations/Project_structure.md` avant toute création de fichier ou ajout de dépendance
 
-#### 6. Error Handling
+#### 6. State & Storage
 
-- Check `/Documentations/Bug_tracking.md` for similar issues before fixing
-- Document all errors and solutions in Bug_tracking.md
-- Include error details, root cause, and resolution steps
+- Riverpod pour le state management
+- Hive pour tout stockage local (100% offline)
+- Jamais de setState ou FutureBuilder dans les écrans principaux
 
-#### 7. Task Completion
+#### 7. Testing
 
-Mark tasks complete only when:
+- Après chaque écran ou fonctionnalité importante → Tester sur **émulateur Android Studio**
+- Vérifier la taille APK (< 15 Mo)
 
-- All functionality implemented correctly
-- Code follows project structure guidelines
-- UI/UX matches specifications (if applicable)
-- No errors or warnings remain
-- All task list items completed (if applicable)
+#### 8. Task Completion
 
-### File Reference Priority
+Marque une tâche terminée **uniquement** quand :
 
-1. `/Documentations/Bug_tracking.md` - Check for known issues first
-2. `/Documentations/Implementation.md` - Main task reference
-3. `/Documentations/project_structure.md` - Structure guidance
-4. `/Documentations/UI_UX_doc.md` - Design requirements
+- Design Stitch validé
+- Code Flutter implémenté
+- UI correspond exactement à UI_UX_doc.md
+- Tests sur émulateur Android Studio OK
+- Aucune erreur/warning
 
-## Critical Rules
+### File Reference Priority (strict)
 
-- **NEVER** skip documentation consultation
-- **NEVER** mark tasks complete without proper testing
-- **NEVER** ignore project structure guidelines
-- **NEVER** implement UI without checking UI_UX_doc.md
-- **NEVER** fix errors without checking Bug_tracking.md first
-- **ALWAYS** document errors and solutions
-- **ALWAYS** follow the established workflow process
+1. `/Documentations/Bug_tracking.md`
+2. `/Documentations/Implementation.md`
+3. `/Documentations/Project_structure.md`
+4. `/Documentations/UI_UX_doc.md`
+5. PRD.md
 
-Remember: Build a cohesive, well-documented, and maintainable project. Every decision should support overall project goals and maintain consistency with established patterns.# Development Agent Workflow - Cursor Rules
+## Critical Rules (NE JAMAIS VIOLER)
 
-## Primary Directive
+- **ALWAYS** utiliser Stitch en premier pour tout visuel
+- **NEVER** coder un écran sans avoir généré le design avec Stitch
+- **NEVER** implémenter d’UI sans consulter UI_UX_doc.md
+- **NEVER** ajouter de backend pour le MVP
+- **NEVER** marquer une tâche terminée sans test sur émulateur
+- **ALWAYS** documenter les erreurs dans Bug_tracking.md
+- **ALWAYS** garder l’app ultra-simple et < 15 Mo
 
-You are a development agent implementing a project. Follow established documentation and maintain consistency.
+## Project-Specific Reminders
 
-## Core Workflow Process
+- Photos produits → `assets/images/products/`
+- Bouton WhatsApp géant sur l’écran Résumé
+- FAB central orange permanent pour « Déclarer ventes »
+- Langue : Français ivoirien naturel
+- Frontend first → Test émulateur → Backend plus tard
 
-### Before Starting Any Task
-
-- Consult `/Documentations/Implementation.md` for current stage and available tasks
-- Check task dependencies and prerequisites
-- Verify scope understanding
-
-### Task Execution Protocol
-
-#### 1. Task Assessment
-
-- Read subtask from `/Documentations/Implementation.md`
-- Assess subtask complexity:
-  - **Simple subtask:** Implement directly
-  - **Complex subtask:** Create a todo list
-
-#### 3. Documentation Research
-
-- Check `/Documentations/Implementation.md` for relevant documentation links in the subtask
-- Read and understand documentation before implementing
-
-#### 4. UI/UX Implementation
-
-- Consult `/Documentations/UI_UX_doc.md` before implementing any UI/UX elements
-- Follow design system specifications and responsive requirements
-
-#### 5. Project Structure Compliance
-
-- Check `/Documentations/project_structure.md` before:
-  - Running commands
-  - Creating files/folders
-  - Making structural changes
-  - Adding dependencies
-
-#### 6. Error Handling
-
-- Check `/Documentations/Bug_tracking.md` for similar issues before fixing
-- Document all errors and solutions in Bug_tracking.md
-- Include error details, root cause, and resolution steps
-
-#### 7. Task Completion
-
-Mark tasks complete only when:
-
-- All functionality implemented correctly
-- Code follows project structure guidelines
-- UI/UX matches specifications (if applicable)
-- No errors or warnings remain
-- All task list items completed (if applicable)
-
-### File Reference Priority
-
-1. `/Documentations/Bug_tracking.md` - Check for known issues first
-2. `/Documentations/Implementation.md` - Main task reference
-3. `/Documentations/project_structure.md` - Structure guidance
-4. `/Documentations/UI_UX_doc.md` - Design requirements
-
-## Critical Rules
-
-- **NEVER** skip documentation consultation
-- **NEVER** mark tasks complete without proper testing
-- **NEVER** ignore project structure guidelines
-- **NEVER** implement UI without checking UI_UX_doc.md
-- **NEVER** fix errors without checking Bug_tracking.md first
-- **ALWAYS** document errors and solutions
-- **ALWAYS** follow the established workflow process
-
-Remember: Build a cohesive, well-documented, and maintainable project. Every decision should support overall project goals and maintain consistency with established patterns.
+Remember: On construit d’abord un frontend magnifique avec Stitch, on teste sur émulateur Android Studio, puis on passe au reste.

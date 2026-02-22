@@ -1,246 +1,144 @@
-# Bug Tracking
+# Bug Tracking - Casier Chap
 
 ## Overview
 
-This document tracks all bugs, issues, and their resolutions for the Wireframe Generator project. All team members should document errors here before attempting fixes and update with solutions.
+Ce document suit tous les bugs, problèmes et leurs résolutions pour le projet **Casier Chap**.  
+Tout bug doit être documenté ici **avant** d’être corrigé.  
+Le projet est 100% Flutter + Stitch + Hive (frontend first).
+
+**Dernière mise à jour :** 20 février 2026  
+**Version du document :** 1.0
 
 ## Bug Report Template
 
-When reporting a bug, please use the following template:
+### Bug ID: CAS-YYYY-MM-DD-X
 
-### Bug ID: [YYYY-MM-DD-###]
+- **Date signalée :** [JJ/MM/AAAA]
+- **Reporter :** [Ton nom ou Antigravity]
+- **Sévérité :** [Critique / Haute / Moyenne / Basse]
+- **Statut :** [Open / In Progress / Resolved / Closed]
+- **Environnement :** [Emulateur Android Studio / Appareil physique / Antigravity]
+- **Version Flutter :** [3.24.x]
 
-- **Date Reported:** [Date]
-- **Reporter:** [Name]
-- **Severity:** [Critical/High/Medium/Low]
-- **Status:** [Open/In Progress/Resolved/Closed]
-- **Environment:** [Development/Staging/Production]
-- **Browser/Device:** [If applicable]
+#### Description du bug
 
-#### Description
+[Description claire et concise]
 
-[Clear description of the bug]
+#### Étapes pour reproduire
 
-#### Steps to Reproduce
+1. Step 1
+2. Step 2
+3. Step 3
 
-1. [Step 1]
-2. [Step 2]
-3. [Step 3]
+#### Comportement attendu
 
-#### Expected Behavior
+[Ce qui devrait se passer]
 
-[What should happen]
+#### Comportement réel
 
-#### Actual Behavior
+[Ce qui se passe réellement]
 
-[What actually happens]
+#### Messages d’erreur / Logs
 
-#### Error Messages
-
-```
-[Any error messages or console logs]
+```console
+[Copie les logs ou l’erreur ici]
 ```
 
-#### Screenshots/Videos
+#### Screenshots / Vidéo
 
-[If applicable]
+[Joindre si possible]
 
-#### Resolution
+#### Résolution
 
-[How the bug was fixed - filled when resolved]
+[Comment le bug a été corrigé - à remplir une fois résolu]
 
-#### Resolution Date
+#### Date de résolution
 
-[Date when bug was resolved]
-
----
+[JJ/MM/AAAA]
 
 ## Active Bugs
 
-### Bug ID: Template-001
-
-- **Date Reported:** [To be filled when first bug is reported]
-- **Reporter:** [Name]
-- **Severity:** [Level]
-- **Status:** [Status]
-- **Environment:** [Environment]
-- **Browser/Device:** [If applicable]
-
-#### Description
-
-[This is a template entry - replace with actual bug reports]
-
----
+Aucun bug actif pour l’instant. À remplir au fur et à mesure.
 
 ## Resolved Bugs
 
-### Bug ID: Example-Resolved-001
+Exemple (à supprimer une fois le premier bug réel ajouté).
 
-- **Date Reported:** [Example date]
-- **Reporter:** [Example name]
-- **Severity:** Medium
-- **Status:** Resolved
-- **Environment:** Development
-- **Resolution Date:** [Example date]
+### Bug ID: CAS-2026-02-20-001
+
+- **Date signalée :** 20/02/2026
+- **Sévérité :** Moyenne
+- **Statut :** Resolved
+- **Environnement :** Emulateur Android Studio
+- **Date de résolution :** 20/02/2026
 
 #### Description
 
-[Example of a resolved bug for reference]
+Le bouton +24 n’était pas assez grand sur les petits écrans.
 
-#### Resolution
+#### Résolution du bug
 
-[Example resolution description]
+Augmenté le `minimumSize` du bouton à 56dp et régénéré le design avec Stitch.
 
----
+## Common Issues & Solutions (Casier Chap)
 
-## Common Issues and Solutions
+### Hive Initialization Errors
 
-### Database Connection Issues
+**Problème :** `Hive.initFlutter()` ou adapters non enregistrés  
+**Solution :** Appeler `HiveService.init()` dans `main.dart` avant `runApp()`
 
-**Problem:** Connection timeouts or failed connections to Supabase
-**Solution:**
+### Riverpod Provider Not Found
 
-- Check environment variables
-- Verify Supabase project status
-- Review connection string format
-- Check network connectivity
+**Problème :** `Provider not found`  
+**Solution :** Vérifier que le provider est dans `ProviderScope` et bien importé
 
-### File Upload Errors
+### Stitch Design → Code mismatch
 
-**Problem:** Files not uploading or processing correctly
-**Solution:**
+**Problème :** L’UI codée ne ressemble pas au design Stitch  
+**Solution :** Régénérer le design avec Stitch + copier les couleurs/hex exacts depuis UI_UX_doc.md
 
-- Verify file size limits
-- Check file type restrictions
-- Review upload API endpoint
-- Validate file processing logic
+### APK trop lourd (>15 Mo)
 
-### AI Generation Failures
+**Problème :** Photos produits trop lourdes  
+**Solution :** Compresser les images dans assets/images/products/ + utiliser `flutter build apk --split-per-abi`
 
-**Problem:** Wireframe generation fails or produces poor results
-**Solution:**
+### Boutons trop petits sur émulateur
 
-- Check AI API key and quota
-- Review prompt engineering
-- Validate input text processing
-- Monitor API response times
+**Problème :** Touch targets < 56dp  
+**Solution :** Toujours utiliser `minimumSize: Size(56, 56)` sur les ElevatedButton / TextButton
 
-### Build and Deployment Issues
+### Dark mode / Glassmorphism non appliqué
 
-**Problem:** Build failures or deployment errors
-**Solution:**
+**Problème :** Carte blanche au lieu de glassmorphism  
+**Solution :** Utiliser `glass_card.dart` et `AppTheme.dark()` partout
 
-- Check Next.js configuration
-- Verify environment variables
-- Review dependency versions
-- Check build logs for specific errors
+### WhatsApp share ne fonctionne pas
 
-### Authentication Problems
-
-**Problem:** User login or session issues
-**Solution:**
-
-- Verify Supabase auth configuration
-- Check JWT token handling
-- Review session management
-- Validate redirect URLs
+**Problème :** share_plus ne s’ouvre pas  
+**Solution :** Ajouter les permissions dans AndroidManifest + tester sur appareil physique
 
 ## Bug Severity Levels
 
-### Critical
-
-- Application crashes or is unusable
-- Data loss or corruption
-- Security vulnerabilities
-- Production downtime
-
-### High
-
-- Major functionality broken
-- Performance severely impacted
-- User workflow blocked
-- Data integrity issues
-
-### Medium
-
-- Minor functionality issues
-- UI/UX problems
-- Non-critical features affected
-- Workarounds available
-
-### Low
-
-- Cosmetic issues
-- Minor inconveniences
-- Enhancement requests
-- Documentation errors
+- **Critique** : Crash de l’app, perte de données, impossibilité d’utiliser
+- **Haute** : Fonctionnalité principale cassée (Déclarer ventes, Résumé)
+- **Moyenne** : UI/UX dégradée, bouton trop petit, mauvais alignement
+- **Basse** : Problème cosmétique, texte mal orthographié, icône légèrement décalée
 
 ## Bug Status Definitions
 
-### Open
-
-- Bug has been reported and confirmed
-- Not yet assigned or being worked on
-- Requires investigation or reproduction
-
-### In Progress
-
-- Bug is currently being worked on
-- Developer assigned and actively fixing
-- May require additional investigation
-
-### Resolved
-
-- Bug has been fixed
-- Solution implemented and tested
-- Ready for verification
-
-### Closed
-
-- Bug fix has been verified
-- Solution confirmed working
-- No further action required
+- **Open** : Signalé et confirmé
+- **In Progress** : En cours de correction
+- **Resolved** : Corrigé et testé sur émulateur
+- **Closed** : Vérifié et validé
 
 ## Reporting Guidelines
 
-1. **Search First:** Check if the bug has already been reported
-2. **Be Specific:** Provide detailed steps to reproduce
-3. **Include Context:** Environment, browser, device information
-4. **Attach Evidence:** Screenshots, error logs, console output
-5. **Update Status:** Keep bug status current as work progresses
-6. **Document Solutions:** Always include resolution details
+1. Cherche d’abord si le bug existe déjà
+2. Sois très précis (étapes + environnement)
+3. Joins toujours screenshot ou vidéo
+4. Mets à jour le statut régulièrement
+5. Documente toujours la solution
 
-## Testing Checklist
+### Règle importante
 
-Before marking a bug as resolved, ensure:
-
-- [ ] Bug can no longer be reproduced
-- [ ] Fix doesn't introduce new issues
-- [ ] All related functionality still works
-- [ ] Performance impact is acceptable
-- [ ] Code review completed
-- [ ] Tests updated if necessary
-
-## Emergency Bug Process
-
-For critical bugs in production:
-
-1. **Immediate Response:** Acknowledge within 1 hour
-2. **Assessment:** Determine impact and urgency
-3. **Communication:** Notify stakeholders
-4. **Hotfix:** Implement emergency fix if needed
-5. **Root Cause:** Investigate underlying cause
-6. **Prevention:** Implement measures to prevent recurrence
-
-## Contact Information
-
-For urgent bugs or questions about this tracking system:
-
-- **Technical Lead:** [Name and contact]
-- **Project Manager:** [Name and contact]
-- **DevOps:** [Name and contact]
-
----
-
-_Last Updated: [Date]_
-_Document Version: 1.0_
+Aucun bug ne doit être corrigé sans être d’abord enregistré ici.

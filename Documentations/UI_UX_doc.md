@@ -1,8 +1,12 @@
-# UI/UX Documentation
+# UI/UX Documentation - Casier Chap
 
 ## Design System Overview
 
-The Wireframe Generator application follows a modern, clean design philosophy with emphasis on usability and accessibility. The design system is built using Tailwind CSS with custom components for consistency across the application.
+Casier Chap est une application mobile Flutter 100% offline, ultra-simple et premium, conçue pour les gérants de petits maquis et bars en Côte d’Ivoire.
+
+**Style global :** Dark mode profond, moderne 2026, glassmorphism subtil, énergie orange vif, très gros éléments tactiles, utilisation à une main en moins de 30 secondes.
+
+**Règle absolue :** Tout élément visuel (logo, écrans, cartes, boutons, photos produits, mockups) **doit être généré avec Stitch** avant d’être converti en code Flutter.
 
 ## Visual Style Guide
 
@@ -10,387 +14,124 @@ The Wireframe Generator application follows a modern, clean design philosophy wi
 
 #### Primary Colors
 
-- **Primary Blue:** `#3B82F6` (Blue-500)
-- **Primary Dark:** `#1E40AF` (Blue-800)
-- **Primary Light:** `#93C5FD` (Blue-300)
-
-#### Secondary Colors
-
-- **Secondary Gray:** `#6B7280` (Gray-500)
-- **Secondary Light:** `#F3F4F6` (Gray-100)
-- **Secondary Dark:** `#374151` (Gray-700)
+- **Primary Orange (énergie principale) :** `#FF7A00`
+- **Primary Dark Orange :** `#E66A00`
+- **Primary Light Orange :** `#FFB74D`
 
 #### Semantic Colors
 
-- **Success:** `#10B981` (Emerald-500)
-- **Warning:** `#F59E0B` (Amber-500)
-- **Error:** `#EF4444` (Red-500)
-- **Info:** `#3B82F6` (Blue-500)
+- **Success / Bon État :** `#00E676` (vert vif)
+- **Warning / Moyen :** `#FF9500` (orange moyen)
+- **Critical / Stock Faible :** `#FF3D00` (rouge discret)
+- **Background :** `#000000` (noir profond)
+- **Surface / Cards :** `#1C1C1E` (glassmorphism)
+- **Border Glass :** `rgba(255,255,255,0.08)`
+- **Text Primary :** `#FFFFFF`
+- **Text Secondary :** `#A1A1A6`
 
-#### Neutral Colors
+### Typography (Inter)
 
-- **Background:** `#FFFFFF` (White)
-- **Surface:** `#F9FAFB` (Gray-50)
-- **Border:** `#E5E7EB` (Gray-200)
-- **Text Primary:** `#111827` (Gray-900)
-- **Text Secondary:** `#6B7280` (Gray-500)
+- **Heading 1 (titres écrans) :** 28-32pt Bold
+- **Big Numbers (caisse, stock) :** 36-48pt Semi-Bold
+- **Body / Labels :** 17pt Regular
+- **Captions / Prix petits :** 13-14pt Medium
+- **Buttons :** 17pt Semi-Bold
 
-### Typography
+### Spacing & Layout
 
-#### Font Family
+- Padding horizontal principal : 24px
+- Padding vertical cartes : 16-20px
+- Espacement entre éléments : 16px / 24px
+- Coins arrondis : **28px** sur toutes les cartes et boutons principaux
 
-- **Primary:** Inter (system font fallback: -apple-system, BlinkMacSystemFont, sans-serif)
-- **Monospace:** JetBrains Mono (system font fallback: ui-monospace, monospace)
+### Glassmorphism
 
-#### Font Sizes
-
-- **Heading 1:** `text-4xl` (36px) - Page titles
-- **Heading 2:** `text-3xl` (30px) - Section headers
-- **Heading 3:** `text-2xl` (24px) - Subsection headers
-- **Heading 4:** `text-xl` (20px) - Card titles
-- **Body Large:** `text-lg` (18px) - Important text
-- **Body:** `text-base` (16px) - Default text
-- **Body Small:** `text-sm` (14px) - Secondary text
-- **Caption:** `text-xs` (12px) - Labels and captions
-
-#### Font Weights
-
-- **Light:** `font-light` (300)
-- **Regular:** `font-normal` (400)
-- **Medium:** `font-medium` (500)
-- **Semibold:** `font-semibold` (600)
-- **Bold:** `font-bold` (700)
-
-### Spacing System
-
-#### Margin and Padding Scale
-
-- **xs:** `0.25rem` (4px)
-- **sm:** `0.5rem` (8px)
-- **md:** `1rem` (16px)
-- **lg:** `1.5rem` (24px)
-- **xl:** `2rem` (32px)
-- **2xl:** `3rem` (48px)
-- **3xl:** `4rem` (64px)
-
-#### Grid System
-
-- **Container:** Max-width with responsive breakpoints
-- **Grid Columns:** 12-column grid system
-- **Gutters:** 1rem (16px) default spacing
-
-### Border Radius
-
-- **Small:** `rounded-sm` (2px)
-- **Default:** `rounded` (4px)
-- **Medium:** `rounded-md` (6px)
-- **Large:** `rounded-lg` (8px)
-- **Extra Large:** `rounded-xl` (12px)
-- **Full:** `rounded-full` (9999px)
+- Background : `Color(0x1C1C1E)` avec opacity 0.95
+- Border : 1px solid `rgba(255,255,255,0.08)`
+- Blur : subtil (utiliser `BackdropFilter` ou Container avec BoxDecoration)
 
 ### Shadows
 
-- **Small:** `shadow-sm` - Subtle elevation
-- **Default:** `shadow` - Standard elevation
-- **Medium:** `shadow-md` - Cards and modals
-- **Large:** `shadow-lg` - Floating elements
-- **Extra Large:** `shadow-xl` - Prominent elements
+- Soft shadow pour élévation légère sur les cartes
 
-## Component Guidelines
+## Component Guidelines (Flutter)
 
-### Buttons
+### Hero Card (valeur stock / caisse)
 
-#### Primary Button
+- Grande carte orange dégradé
+- Gros chiffre centré
+- Badge vert pour évolution (+12%)
 
-- **Background:** Primary Blue
-- **Text:** White
-- **Hover:** Primary Dark
-- **Border Radius:** Medium (6px)
-- **Padding:** 0.5rem 1rem
-- **Font Weight:** Medium
+### Product Card
 
-#### Secondary Button
+- Photo produit réaliste à gauche (grande)
+- Nom produit en Bold
+- "Casier 24 bouteilles"
+- Prix achat / vente alignés
+- Badge statut (BON ÉTAT / MOYEN / CRITIQUE)
+- Bouton édition discret
 
-- **Background:** Transparent
-- **Text:** Primary Blue
-- **Border:** 1px solid Primary Blue
-- **Hover:** Primary Light background
-- **Border Radius:** Medium (6px)
-- **Padding:** 0.5rem 1rem
-- **Font Weight:** Medium
+### Quantity Preset Buttons
 
-#### Danger Button
+- Gros boutons orange : **+1  +5  +10  +24**
+- Touch target minimum 56dp
+- +24 particulièrement mis en avant (casier)
 
-- **Background:** Error Red
-- **Text:** White
-- **Hover:** Darker red
-- **Border Radius:** Medium (6px)
-- **Padding:** 0.5rem 1rem
-- **Font Weight:** Medium
+### FAB Central
 
-### Form Elements
+- Bouton orange géant permanent en bas au centre
+- Icône + « Déclarer ventes »
 
-#### Input Fields
+### Bottom Navigation
 
-- **Background:** White
-- **Border:** 1px solid Border Gray
-- **Focus:** Primary Blue border
-- **Border Radius:** Medium (6px)
-- **Padding:** 0.75rem 1rem
-- **Placeholder:** Text Secondary
+- 5 icônes : Accueil, Stock, Ventes (FAB), Historique, Profil
 
-#### File Upload Zone
+### Bouton WhatsApp
 
-- **Background:** Surface Gray
-- **Border:** 2px dashed Border Gray
-- **Hover:** Primary Light border
-- **Border Radius:** Large (8px)
-- **Padding:** 2rem
-- **Text Alignment:** Center
+- Vert vif (#25D366), très grand sur l’écran Résumé
+- Icône WhatsApp + texte "Partager sur WhatsApp"
 
-#### Labels
+### Status Badges
 
-- **Font Weight:** Medium
-- **Color:** Text Primary
-- **Margin Bottom:** 0.5rem
+- Vert rond « BON ÉTAT »
+- Orange « MOYEN »
+- Rouge « CRITIQUE »
 
-### Cards
+## Specific Screens (à générer avec Stitch)
 
-#### Standard Card
+1. **Splash Screen** : Logo caisse orange + tagline
+2. **Dashboard** : Hero valeur stock + 3 petites cartes catégories + scroll horizontal produits
+3. **Mes Produits** : Search bar + liste verticale ProductCard
+4. **Déclarer Ventes** : Liste produits + presets quantités + total live en bas
+5. **Résumé de la Journée** : Hero caisse énorme + marge verte + bouton WhatsApp géant
 
-- **Background:** White
-- **Border:** 1px solid Border Gray
-- **Border Radius:** Large (8px)
-- **Padding:** 1.5rem
-- **Shadow:** Default shadow
+## User Experience Rules
 
-#### Hover Card
+- **Ultra-simple** : maximum 3 taps pour déclarer une journée
+- **One-handed** : tous les boutons en zone accessible avec le pouce
+- **Dark mode only** : optimisé pour usage soir/nuit dans le maquis
+- **Photos produits réalistes** : Flag Spéciale, Bock Solibra, Coca-Cola, Guinness, Fanta, Awa 1.5L…
+- **Feedback immédiat** : total estimé qui monte en live
+- **Confirmation** : modale avant validation de la journée
 
-- **Hover Shadow:** Medium shadow
-- **Hover Border:** Primary Light
-- **Transition:** All 0.2s ease
+## Accessibility & Performance
 
-### Navigation
+- Touch targets minimum 56dp
+- Contraste très élevé (WCAG AAA)
+- Police Inter lisible même sur petits écrans
+- Images optimisées (assets locales)
+- Application < 15 Mo
+- Test obligatoire sur émulateur Android Studio après chaque écran important
 
-#### Header
+## Stitch Usage Rule (Obligatoire)
 
-- **Background:** White
-- **Border Bottom:** 1px solid Border Gray
-- **Height:** 4rem (64px)
-- **Padding:** 0 1.5rem
-- **Shadow:** Small shadow
+Avant de coder tout nouvel écran ou composant visuel :
 
-#### Sidebar
+1. Demander à Stitch de générer le design (iPhone 16 Pro, dark mode, glassmorphism, orange #FF7A00)
+2. Valider le visuel
+3. Convertir en code Flutter propre
 
-- **Background:** Surface Gray
-- **Width:** 16rem (256px)
-- **Border Right:** 1px solid Border Gray
-- **Padding:** 1rem
+**Ce document est la référence visuelle unique du projet.**
 
-#### Navigation Links
-
-- **Default:** Text Secondary
-- **Hover:** Text Primary
-- **Active:** Primary Blue background, White text
-- **Border Radius:** Medium (6px)
-- **Padding:** 0.5rem 1rem
-
-## Layout Structure
-
-### Page Layout
-
-- **Container:** Max-width 1200px, centered
-- **Padding:** 1.5rem on mobile, 2rem on desktop
-- **Grid:** CSS Grid with sidebar and main content areas
-
-### Responsive Breakpoints
-
-- **Mobile:** < 640px
-- **Tablet:** 640px - 1024px
-- **Desktop:** > 1024px
-
-### Content Spacing
-
-- **Section Spacing:** 3rem (48px) between major sections
-- **Component Spacing:** 1.5rem (24px) between components
-- **Element Spacing:** 1rem (16px) between related elements
-
-## User Experience Patterns
-
-### File Upload Flow
-
-1. **Landing Page:** Clear call-to-action for file upload
-2. **Upload Zone:** Drag-and-drop with file browser fallback
-3. **Processing:** Loading state with progress indicator
-4. **Results:** Generated wireframe with options to view/edit/download
-
-### Navigation Flow
-
-1. **Home:** File upload and recent files
-2. **Dashboard:** Overview of all files and wireframes
-3. **Wireframes:** Individual wireframe viewing and editing
-4. **Settings:** User preferences and account management
-
-### Error Handling
-
-- **Inline Validation:** Real-time form validation
-- **Error Messages:** Clear, actionable error descriptions
-- **Fallback States:** Graceful degradation for failed operations
-
-## Accessibility Standards
-
-### WCAG 2.1 AA Compliance
-
-- **Color Contrast:** Minimum 4.5:1 ratio for normal text
-- **Focus Indicators:** Visible focus states for all interactive elements
-- **Keyboard Navigation:** Full keyboard accessibility
-- **Screen Reader Support:** Proper ARIA labels and semantic HTML
-
-### Inclusive Design
-
-- **Font Size:** Minimum 16px for body text
-- **Touch Targets:** Minimum 44px for touch interfaces
-- **Motion:** Respect user preferences for reduced motion
-- **Language:** Clear, simple language throughout
-
-## Interactive States
-
-### Hover States
-
-- **Buttons:** Background color change with transition
-- **Cards:** Subtle shadow elevation
-- **Links:** Color change and underline
-
-### Focus States
-
-- **Form Elements:** Primary Blue outline
-- **Buttons:** Primary Blue outline
-- **Cards:** Primary Blue border
-
-### Loading States
-
-- **Buttons:** Disabled state with spinner
-- **Content:** Skeleton loading animations
-- **File Upload:** Progress bar with percentage
-
-### Empty States
-
-- **No Files:** Illustration with upload prompt
-- **No Results:** Clear message with suggested actions
-- **Error State:** Friendly error message with retry option
-
-## Animation Guidelines
-
-### Transitions
-
-- **Duration:** 0.2s for micro-interactions, 0.3s for layout changes
-- **Easing:** ease-in-out for natural movement
-- **Properties:** Transform and opacity for performance
-
-### Loading Animations
-
-- **Spinner:** Rotating animation for button loading
-- **Skeleton:** Pulse animation for content loading
-- **Progress Bar:** Smooth width transition
-
-### Page Transitions
-
-- **Fade:** Subtle fade-in for new content
-- **Slide:** Smooth slide transitions for navigation
-- **Scale:** Gentle scale for modal appearances
-
-## Mobile Responsiveness
-
-### Mobile-First Design
-
-- **Base Styles:** Optimized for mobile screens
-- **Progressive Enhancement:** Enhanced features for larger screens
-- **Touch Interactions:** Appropriate touch targets and gestures
-
-### Responsive Components
-
-- **Navigation:** Collapsible mobile menu
-- **Cards:** Stack vertically on mobile
-- **Forms:** Full-width inputs on mobile
-- **Tables:** Horizontal scroll or card layout
-
-### Performance Considerations
-
-- **Image Optimization:** Responsive images with appropriate sizes
-- **Font Loading:** Efficient font loading strategies
-- **Critical CSS:** Above-the-fold styles inlined
-- **Lazy Loading:** Images and non-critical content
-
-## Design Tokens
-
-### CSS Custom Properties
-
-```css
-:root {
-  --color-primary: #3b82f6;
-  --color-primary-dark: #1e40af;
-  --color-primary-light: #93c5fd;
-  --color-secondary: #6b7280;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-  --color-background: #ffffff;
-  --color-surface: #f9fafb;
-  --color-border: #e5e7eb;
-  --color-text-primary: #111827;
-  --color-text-secondary: #6b7280;
-
-  --font-family-primary: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-family-mono: "JetBrains Mono", ui-monospace, monospace;
-
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  --spacing-3xl: 4rem;
-
-  --border-radius-sm: 2px;
-  --border-radius-md: 6px;
-  --border-radius-lg: 8px;
-  --border-radius-xl: 12px;
-  --border-radius-full: 9999px;
-
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-}
-```
-
-## Component Library Structure
-
-### Base Components
-
-- Button
-- Input
-- Card
-- Modal
-- Toast
-- Spinner
-- Badge
-
-### Composite Components
-
-- FileUpload
-- WireframeViewer
-- Dashboard
-- Navigation
-- Header
-- Footer
-
-### Layout Components
-
-- Container
-- Grid
-- Flex
-- Stack
-- Sidebar
-
-This UI/UX documentation provides a comprehensive guide for maintaining design consistency throughout the Wireframe Generator application. All components should follow these guidelines to ensure a cohesive and professional user experience.
+Tout doit être cohérent avec ce Design System et généré via Stitch.
+Ce fichier est maintenant 100% adapté à Casier Chap.

@@ -1,143 +1,129 @@
-# Implementation Plan for Wireframe Generator
+# Implementation Plan for Casier Chap
+
+**Version :** 1.0 (Frontend First)  
+**Date :** 20 février 2026  
+**Projet :** App mobile Flutter 100% offline pour gérants de maquis en Côte d’Ivoire
 
 ## Feature Analysis
 
-### Identified Features:
+### Identified Features
 
-1. **File Upload System** - Allow users to upload text files containing user stories
-2. **Text Processing** - Extract and parse content from uploaded files
-3. **AI Wireframe Generation** - Use AI to convert text content into wireframes
-4. **Database Storage** - Store uploaded files and generated wireframes
-5. **User Interface** - Modern, clean UI for file upload and wireframe display
-6. **File Management** - View, manage, and download generated wireframes
+- Splash Screen avec logo
+- Dashboard (valeur stock + badges + état produits)
+- Mes Produits (liste + recherche + édition)
+- Déclarer Ventes du Jour (presets +1/+5/+10/+24 + total live)
+- Résumé de la Journée (caisse + marge + bouton WhatsApp)
+- Historique des 7 derniers jours
+- Gestion du stock avec badges (BON ÉTAT / MOYEN / CRITIQUE)
+- Persistance locale complète
+- Partage WhatsApp en un tap
 
-### Feature Categorization:
+### Feature Categorization
 
-- **Must-Have Features:**
-  - File upload functionality
-  - Text file content extraction
-  - AI wireframe generation
-  - Database storage for files
-  - Basic user interface
-- **Should-Have Features:**
-  - File management dashboard
-  - Wireframe preview and editing
-  - Export functionality
-  - User authentication
-- **Nice-to-Have Features:**
-  - Multiple file format support
-  - Collaborative features
-  - Version history
-  - Advanced AI customization options
+- **Must-Have (MVP) :**
+  - Splash Screen
+  - Dashboard
+  - Mes Produits
+  - Déclarer Ventes du Jour
+  - Résumé de la Journée
+  - Stock management + badges
+  - Persistance Hive
+  - Bouton WhatsApp
+  - FAB central orange
+- **Should-Have :**
+  - Historique 7 jours
+  - Confirmation avant validation journée
+  - Recherche dans Mes Produits
+  - Calcul automatique marge
+- **Nice-to-Have :**
+  - Widget Android
+  - Mode Super Simple
+  - Suggestion réapprovisionnement
+  - Thème clair (optionnel)
 
 ## Recommended Tech Stack
 
-### Frontend:
+- **Framework :** Flutter 3.24+ (Frontend mobile first)
+- **State Management :** Riverpod
+- **Local Storage :** Hive (100% offline)
+- **Visual Design Tool :** Stitch (obligatoire pour tout visuel : logo, écrans, cartes, boutons, photos produits)
+- **Sharing :** `share_plus` (WhatsApp)
+- **Fonts :** `google_fonts` (Inter)
+- **Design :** Material 3 + glassmorphism custom
 
-- **Framework:** Next.js 15 - Latest version with App Router, React 19 support, and improved performance
-- **Documentation:** https://nextjs.org/docs
+**Backend :** Aucun pour le MVP (tout en local Hive). Backend sera ajouté plus tard si besoin.
 
-### Styling:
-
-- **Framework:** Tailwind CSS - Modern utility-first CSS framework for rapid UI development
-- **Documentation:** https://tailwindcss.com/docs
-
-### Backend:
-
-- **Runtime:** Next.js 15 API Routes and Server Actions - Built-in backend capabilities
-- **Database ORM:** Prisma - Type-safe database client with excellent PostgreSQL support
-- **Documentation:** https://www.prisma.io/docs
-
-### Database:
-
-- **Database:** Supabase (PostgreSQL) - Managed PostgreSQL with real-time capabilities and built-in auth
-- **Documentation:** https://supabase.com/docs
-
-### AI Integration:
-
-- **AI Service:** OpenAI GPT-4 or Claude API - For text-to-wireframe generation
-- **Alternative:** Hugging Face Transformers - For open-source AI models
-- **Documentation:** https://platform.openai.com/docs
-
-### Additional Tools:
-
-- **File Handling:** Multer or Next.js built-in file upload - For handling file uploads
-- **Wireframe Rendering:** Canvas API or SVG - For rendering wireframes
-- **Documentation:** https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
-
-## Implementation Stages
+## Implementation Stages (Frontend First)
 
 ### Stage 1: Foundation & Setup
 
-**Duration:** 1-2 weeks
-**Dependencies:** None
+**Durée estimée :** 4-6 heures  
+**Dépendances :** Aucune
 
-#### Sub-steps:
+- [ ] Créer le projet Flutter
+- [ ] Configurer `pubspec.yaml` (Riverpod, Hive, google_fonts, share_plus, etc.)
+- [ ] Mettre en place le Design System complet (theme, colors, glassmorphism)
+- [ ] Créer toute la structure de dossiers selon `Project_structure.md`
+- [ ] Ajouter les assets (`images/products/` + logo via Stitch)
+- [ ] Initialiser Hive + adapters
+- [ ] Configurer Riverpod providers de base
 
-- [ ] Initialize Next.js 15 project with TypeScript
-- [ ] Set up Tailwind CSS configuration
-- [ ] Configure Supabase project and database
-- [ ] Set up Prisma ORM with PostgreSQL schema
-- [ ] Create basic project structure and folders
-- [ ] Set up environment variables and configuration
-- [ ] Configure ESLint and Prettier
-- [ ] Set up Git repository and version control
+### Stage 2: Core UI & Navigation
 
-### Stage 2: Core Features
+**Durée estimée :** 6-8 heures  
+**Dépendances :** Stage 1 terminé
 
-**Duration:** 2-3 weeks
-**Dependencies:** Stage 1 completion
+- [ ] Générer avec **Stitch** le Splash Screen + logo
+- [ ] Générer avec **Stitch** le style global (glassmorphism, orange #FF7A00)
+- [ ] Implémenter Bottom Navigation + FAB central orange
+- [ ] Mettre en place routing (GoRouter)
+- [ ] Créer les 5 écrans vides avec Scaffold et thème
+- [ ] Appliquer Inter font partout
 
-#### Sub-steps:
+### Stage 3: Core Screens & Features
 
-- [ ] Implement file upload functionality
-- [ ] Create database schema for files and wireframes
-- [ ] Build text file processing and extraction
-- [ ] Integrate AI API for wireframe generation
-- [ ] Create basic UI components for file upload
-- [ ] Implement file storage in database
-- [ ] Add basic error handling and validation
-- [ ] Create wireframe display components
+**Durée estimée :** 12-16 heures  
+**Dépendances :** Stage 2 terminé
 
-### Stage 3: Advanced Features
+- [ ] Générer avec **Stitch** le Dashboard complet → implémenter
+- [ ] Générer avec **Stitch** Mes Produits → implémenter
+- [ ] Générer avec **Stitch** Déclarer Ventes du Jour (presets + total live) → implémenter
+- [ ] Générer avec **Stitch** Résumé de la Journée (hero + WhatsApp) → implémenter
+- [ ] Créer modèles Hive (Product, DailySale)
+- [ ] Implémenter logique calcul caisse / marge / mise à jour stock
 
-**Duration:** 2-3 weeks
-**Dependencies:** Stage 2 completion
+### Stage 4: Offline Logic & Polish
 
-#### Sub-steps:
+**Durée estimée :** 8-10 heures  
+**Dépendances :** Stage 3 terminé
 
-- [ ] Build file management dashboard
-- [ ] Implement wireframe preview functionality
-- [ ] Add export and download features
-- [ ] Create user authentication system
-- [ ] Implement file organization and categorization
-- [ ] Add wireframe editing capabilities
-- [ ] Optimize AI prompt engineering for better results
-- [ ] Add loading states and progress indicators
+- [ ] Persistance complète avec Hive
+- [ ] Historique 7 jours
+- [ ] Badges stock dynamiques
+- [ ] Confirmation dialog avant validation journée
+- [ ] Micro-interactions et animations
+- [ ] Optimisation performance et taille APK
 
-### Stage 4: Polish & Optimization
+### Stage 5: Testing on Android Studio Emulator
 
-**Duration:** 1-2 weeks
-**Dependencies:** Stage 3 completion
+**Durée estimée :** 6-8 heures  
+**Dépendances :** Stage 4 terminé
 
-#### Sub-steps:
+- [ ] Tester tous les écrans sur émulateur Android Studio (Android 8.0+ et 14)
+- [ ] Vérifier usage à une main et vitesse
+- [ ] Tester partage WhatsApp
+- [ ] Valider taille APK < 15 Mo
+- [ ] Mettre à jour `Bug_tracking.md`
+- [ ] Préparer screenshots pour Play Store
 
-- [ ] Conduct comprehensive testing
-- [ ] Optimize performance and loading times
-- [ ] Enhance UI/UX design and responsiveness
-- [ ] Implement comprehensive error handling
-- [ ] Add accessibility features
-- [ ] Optimize database queries and API calls
-- [ ] Set up monitoring and analytics
-- [ ] Prepare for deployment and production
+**Durée totale estimée MVP Frontend :** 36-48 heures (1 développeur + Antigravity/Stitch)
 
-## Resource Links
+## Important Guidelines
 
-- [Next.js 15 Documentation](https://nextjs.org/docs)
-- [Supabase Documentation](https://supabase.com/docs)
-- [Prisma Documentation](https://www.prisma.io/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [OpenAI API Documentation](https://platform.openai.com/docs)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs)
-- [PostgreSQL Documentation](https://www.postgresql.org/docs)
-- [AI Wireframe Generation Best Practices](https://www.banani.co/product/ai-wireframe-generator)
+- **Stitch obligatoire** : Tout écran ou composant visuel doit d’abord être généré avec Stitch
+- Frontend en priorité absolue
+- Tester sur émulateur Android Studio après chaque stage important
+- Respecter strictement `UI_UX_doc.md` et `Project_structure.md`
+- Garder l’app ultra-simple et magnifique
+
+**Règle d’or :** On construit d’abord un frontend premium avec Stitch, on teste sur émulateur, puis on passe au reste.
