@@ -1,5 +1,7 @@
 # Casier Chap 🍻
 
+[![Flutter CI](https://github.com/velesky/Casier-shap/actions/workflows/flutter_ci.yml/badge.svg)](https://github.com/velesky/Casier-shap/actions)
+
 **Casier Chap** est une application Flutter premium, 100% offline, conçue pour la gestion simplifiée de stocks et de ventes pour les commerces de proximité (maquis, boutiques, etc.) en Côte d'Ivoire.
 
 ---
