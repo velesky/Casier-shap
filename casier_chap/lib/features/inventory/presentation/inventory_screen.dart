@@ -5,6 +5,7 @@ import '../../../core/theme/colors.dart';
 import '../../../shared/widgets/glass_card.dart';
 import '../providers/inventory_provider.dart';
 import '../../../shared/models/product.dart';
+import '../../../shared/widgets/bouncy_tappable.dart';
 
 class InventoryScreen extends ConsumerWidget {
   const InventoryScreen({super.key});
@@ -119,7 +120,10 @@ class InventoryScreen extends ConsumerWidget {
                         ),
                         itemCount: products.length,
                         itemBuilder: (context, index) {
-                          return _ProductCard(product: products[index]);
+                          return _AnimatedProductCard(
+                            product: products[index],
+                            index: index,
+                          );
                         },
                       ),
               ),
@@ -180,6 +184,71 @@ class _CategorySelector extends ConsumerWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _AnimatedProductCard extends StatefulWidget {
+  final Product product;
+  final int index;
+
+  const _AnimatedProductCard({required this.product, required this.index});
+
+  @override
+  State<_AnimatedProductCard> createState() => _AnimatedProductCardState();
+}
+
+class _AnimatedProductCardState extends State<_AnimatedProductCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: 400 + (widget.index * 100).clamp(0, 400),
+      ),
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.4, 1.0, curve: Curves.easeOut),
+      ),
+    );
+
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.2), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.4, 1.0, curve: Curves.easeOutBack),
+          ),
+        );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: BouncyTappable(
+          onTap: () => context.push('/inventory/edit/${widget.product.id}'),
+          child: _ProductCard(product: widget.product),
+        ),
       ),
     );
   }

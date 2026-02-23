@@ -5,6 +5,7 @@ import '../../../core/theme/colors.dart';
 import '../../../shared/widgets/glass_card.dart';
 import '../../inventory/providers/inventory_provider.dart';
 import '../providers/sales_provider.dart';
+import '../../../shared/widgets/bouncy_tappable.dart';
 
 class SalesScreen extends ConsumerWidget {
   const SalesScreen({super.key});
@@ -79,79 +80,87 @@ class SalesScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 64,
-                    child: ElevatedButton(
-                      onPressed: salesState.isEmpty
-                          ? null
-                          : () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  backgroundColor: AppColors.surface,
-                                  title: const Text('Confirmer les ventes ?'),
-                                  content: const Text(
-                                    'Cela mettra à jour votre stock de produits de manière permanente.',
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text(
-                                        'Annuler',
-                                        style: TextStyle(color: Colors.white70),
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context); // Close dialog
-                                        context.push('/sales/summary');
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            AppColors.primaryOrange,
-                                        foregroundColor: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                        ),
-                                      ),
-                                      child: const Text(
-                                        'Confirmer',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                  BouncyTappable(
+                    onTap: salesState.isEmpty
+                        ? null
+                        : () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                backgroundColor: AppColors.surface,
+                                title: const Text('Confirmer les ventes ?'),
+                                content: const Text(
+                                  'Cela mettra à jour votre stock de produits de manière permanente.',
                                 ),
-                              );
-                            },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryOrange,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text(
+                                      'Annuler',
+                                      style: TextStyle(color: Colors.white70),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context); // Close dialog
+                                      context.push('/sales/summary');
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.primaryOrange,
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Confirmer',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 64,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: salesState.isEmpty
+                              ? Colors.grey.withValues(alpha: 0.1)
+                              : AppColors.primaryOrange,
                           borderRadius: BorderRadius.circular(28),
+                          boxShadow: [
+                            if (salesState.isNotEmpty)
+                              BoxShadow(
+                                color: AppColors.primaryOrange.withValues(
+                                  alpha: 0.3,
+                                ),
+                                blurRadius: 15,
+                                offset: const Offset(0, 5),
+                              ),
+                          ],
                         ),
-                        elevation: 0,
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.share_rounded),
-                          SizedBox(width: 8),
-                          Text(
-                            'Enregistrer & Partager',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.share_rounded, color: Colors.white),
+                            SizedBox(width: 8),
+                            Text(
+                              'Enregistrer & Partager',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -272,7 +281,7 @@ class _QuickButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GestureDetector(
+      child: BouncyTappable(
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12),

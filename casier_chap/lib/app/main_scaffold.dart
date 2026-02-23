@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../core/theme/colors.dart';
+import '../shared/widgets/bouncy_tappable.dart';
+import '../shared/widgets/pulsing_glow.dart';
 
 class MainScaffold extends ConsumerWidget {
   final Widget child;
@@ -23,12 +25,18 @@ class MainScaffold extends ConsumerWidget {
 
     return Scaffold(
       body: child,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/sales'),
-        backgroundColor: AppColors.primaryOrange,
-        foregroundColor: Colors.white,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add_shopping_cart_rounded, size: 28),
+      floatingActionButton: PulsingGlow(
+        glowColor: AppColors.primaryOrange,
+        child: BouncyTappable(
+          onTap: () => context.push('/sales'),
+          child: FloatingActionButton(
+            onPressed: () => context.push('/sales'),
+            backgroundColor: AppColors.primaryOrange,
+            foregroundColor: Colors.white,
+            shape: const CircleBorder(),
+            child: const Icon(Icons.add_shopping_cart_rounded, size: 28),
+          ),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -103,9 +111,8 @@ class _NavBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return BouncyTappable(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

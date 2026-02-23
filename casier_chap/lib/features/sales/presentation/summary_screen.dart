@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/colors.dart';
 import '../../../shared/widgets/glass_card.dart';
+import '../../../shared/widgets/bouncy_tappable.dart';
 import '../../inventory/providers/inventory_provider.dart';
 import '../providers/sales_provider.dart';
 
@@ -128,72 +129,73 @@ class SummaryScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(24),
             child: Column(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await notifier.saveSales();
-                      if (context.mounted) {
-                        context.go('/dashboard');
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryOrange,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
+                BouncyTappable(
+                  onTap: () async {
+                    await notifier.saveSales();
+                    if (context.mounted) {
+                      context.go('/dashboard');
+                    }
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryOrange,
                         borderRadius: BorderRadius.circular(16),
                       ),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.check_circle_outline_rounded),
-                        SizedBox(width: 8),
-                        Text(
-                          'TERMINER',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.check_circle_outline_rounded,
+                            color: Colors.white,
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 8),
+                          Text(
+                            'TERMINER',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: OutlinedButton(
-                    onPressed: () async {
-                      await notifier.saveAndShare();
-                      if (context.mounted) {
-                        context.go('/dashboard');
-                      }
-                    },
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: const Color(
-                        0xFF25D366,
-                      ), // WhatsApp Green
-                      side: const BorderSide(color: Color(0xFF25D366)),
-                      shape: RoundedRectangleBorder(
+                BouncyTappable(
+                  onTap: () async {
+                    await notifier.saveAndShare();
+                    if (context.mounted) {
+                      context.go('/dashboard');
+                    }
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: Container(
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: const Color(0xFF25D366)),
                       ),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.share_rounded),
-                        SizedBox(width: 8),
-                        Text(
-                          'Partager sur WhatsApp',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.share_rounded, color: Color(0xFF25D366)),
+                          SizedBox(width: 8),
+                          Text(
+                            'Partager sur WhatsApp',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF25D366),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

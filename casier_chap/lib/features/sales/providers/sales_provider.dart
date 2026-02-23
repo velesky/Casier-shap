@@ -75,15 +75,25 @@ class SalesNotifier extends StateNotifier<Map<String, int>> {
       totalMarge: totalMarge,
     );
 
-    // Persist to Hive (use put to update existing day or create new)
+    // Persist to Hive (Merge if same day exists)
     final box = Hive.box<DailySale>('sales');
     final existing = box.get(saleId);
 
     if (existing != null) {
-      // Merge sales if same day?
-      // For simplicity in this MVP, we replace or append.
-      // The user usually does one big report.
-      await box.put(saleId, dailySale);
+      final mergedProductSales = Map<String, int>.from(existing.productSales);
+      state.forEach((productId, quantity) {
+        mergedProductSales[productId] =
+            (mergedProductSales[productId] ?? 0) + quantity;
+      });
+
+      final updatedSale = DailySale(
+        id: saleId,
+        date: existing.date, // Keep original date of the first sale of the day
+        productSales: mergedProductSales,
+        totalCaisse: existing.totalCaisse + totalCaisse,
+        totalMarge: existing.totalMarge + totalMarge,
+      );
+      await box.put(saleId, updatedSale);
     } else {
       await box.put(saleId, dailySale);
     }
