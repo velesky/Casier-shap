@@ -126,11 +126,13 @@ class _NavBarItem extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: isSelected
                   ? AppColors.primaryOrange
                   : AppColors.textSecondary,
-              fontSize: 12,
+              fontSize: 10,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
             ),
           ),
