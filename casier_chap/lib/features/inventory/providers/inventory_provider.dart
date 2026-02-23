@@ -4,9 +4,11 @@ import '../../../shared/models/product.dart';
 
 class InventoryNotifier extends StateNotifier<List<Product>> {
   final Box<Product> _box;
+  final Box _settingsBox = Hive.box('settings');
 
   InventoryNotifier(this._box) : super([]) {
     _loadProducts();
+    seedInitialData();
   }
 
   void _loadProducts() {
@@ -31,9 +33,10 @@ class InventoryNotifier extends StateNotifier<List<Product>> {
     state = state.where((p) => p.id != id).toList();
   }
 
-  // Seed default products for demonstration if empty
+  // Seed default products for demonstration if never seeded before
   Future<void> seedInitialData() async {
-    if (_box.isEmpty) {
+    final isSeeded = _settingsBox.get('is_seeded', defaultValue: false);
+    if (!isSeeded) {
       final initialProducts = [
         Product(
           id: '1',
@@ -66,6 +69,7 @@ class InventoryNotifier extends StateNotifier<List<Product>> {
       for (final p in initialProducts) {
         await addProduct(p);
       }
+      await _settingsBox.put('is_seeded', true);
     }
   }
 }

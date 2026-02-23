@@ -76,25 +76,31 @@ class _SplashScreenState extends State<SplashScreen>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Logo Placeholder (Minimalist Crate)
-                  Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryOrange,
-                      borderRadius: BorderRadius.circular(28),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primaryOrange.withValues(alpha: 0.3),
-                          blurRadius: 30,
-                          spreadRadius: 5,
+                  // Premium Logo
+                  Hero(
+                    tag: 'app_logo',
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primaryOrange.withValues(
+                              alpha: 0.2,
+                            ),
+                            blurRadius: 40,
+                            spreadRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(80),
+                        child: Image.asset(
+                          'assets/images/logo/logo.png',
+                          fit: BoxFit.contain,
                         ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.inventory_2_rounded,
-                      size: 60,
-                      color: Colors.white,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 24),

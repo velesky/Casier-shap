@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/colors.dart';
+import '../../inventory/providers/inventory_provider.dart';
+import '../../../shared/models/product.dart';
 import '../../../shared/models/daily_sale.dart';
 import '../../../shared/widgets/glass_card.dart';
 
@@ -11,12 +13,26 @@ class HistoryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final products = ref.watch(inventoryProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Historique')),
       body: ValueListenableBuilder<Box<DailySale>>(
         valueListenable: Hive.box<DailySale>('sales').listenable(),
         builder: (context, box, _) {
-          final sales = box.values.toList().reversed.toList();
+          final now = DateTime.now();
+          final sevenDaysAgo = now.subtract(const Duration(days: 7));
+
+          final sales = box.values
+              .where(
+                (s) =>
+                    s.date.isAfter(sevenDaysAgo) ||
+                    DateFormat('yyyyMMdd').format(s.date) ==
+                        DateFormat('yyyyMMdd').format(sevenDaysAgo),
+              )
+              .toList()
+              .reversed
+              .toList();
 
           if (sales.isEmpty) {
             return const Center(
@@ -97,7 +113,20 @@ class HistoryScreen extends ConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Produit #${entry.key}', // Ideally we'd map this to name
+                                products
+                                    .firstWhere(
+                                      (p) => p.id == entry.key,
+                                      orElse: () => Product(
+                                        id: entry.key,
+                                        name: 'Produit #${entry.key}',
+                                        category: '',
+                                        purchasePrice: 0,
+                                        salePrice: 0,
+                                        stockQuantity: 0,
+                                        criticalThreshold: 0,
+                                      ),
+                                    )
+                                    .name,
                                 style: const TextStyle(
                                   color: AppColors.textSecondary,
                                 ),

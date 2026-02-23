@@ -8,8 +8,24 @@ import '../../inventory/providers/inventory_provider.dart';
 
 class SalesNotifier extends StateNotifier<Map<String, int>> {
   final Ref _ref;
+  final Box _settingsBox = Hive.box('settings');
 
-  SalesNotifier(this._ref) : super({});
+  SalesNotifier(this._ref) : super({}) {
+    _loadDraft();
+  }
+
+  void _loadDraft() {
+    final draft = _settingsBox.get('sales_draft');
+    if (draft != null && draft is Map) {
+      state = Map<String, int>.from(
+        draft.map((k, v) => MapEntry(k.toString(), v as int)),
+      );
+    }
+  }
+
+  Future<void> _persistDraft() async {
+    await _settingsBox.put('sales_draft', state);
+  }
 
   void updateQuantity(String productId, int delta) {
     final current = state[productId] ?? 0;
@@ -20,6 +36,7 @@ class SalesNotifier extends StateNotifier<Map<String, int>> {
     } else {
       state = {...state, productId: newValue};
     }
+    _persistDraft();
   }
 
   double calculateTotalCaisse() {
@@ -91,6 +108,7 @@ class SalesNotifier extends StateNotifier<Map<String, int>> {
 
     // Clear current sales state
     state = {};
+    await _persistDraft();
   }
 
   Future<void> saveAndShare() async {

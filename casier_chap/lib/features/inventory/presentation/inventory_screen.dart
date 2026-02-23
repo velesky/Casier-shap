@@ -12,94 +12,175 @@ class InventoryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(filteredInventoryProvider);
-    final selectedCategory = ref.watch(categoryFilterProvider);
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Mes Produits'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text(
+          'Mes Produits',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: [
           IconButton(
             onPressed: () => context.push('/inventory/add'),
-            icon: const Icon(
-              Icons.add_circle_outline_rounded,
-              color: AppColors.primaryOrange,
+            icon: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.primaryOrange,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primaryOrange.withOpacity(0.3),
+                    blurRadius: 10,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
+              child: const Icon(Icons.add, color: Colors.white, size: 20),
             ),
             tooltip: 'Ajouter un produit',
           ),
+          const SizedBox(width: 8),
         ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(80),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    onChanged: (val) =>
-                        ref.read(searchQueryProvider.notifier).state = val,
-                    decoration: InputDecoration(
-                      hintText: 'Rechercher un produit...',
-                      prefixIcon: const Icon(Icons.search_rounded),
-                      filled: true,
-                      fillColor: AppColors.surface,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: BorderSide.none,
+      ),
+      body: Stack(
+        children: [
+          // Background Gradient
+          Positioned.fill(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Color(0xFF0A0A0A), Color(0xFF000000)],
+                ),
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              const SizedBox(height: 100), // Height for AppBar
+              // Floating Search Bar
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 8,
+                ),
+                child: GlassCard(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  borderRadius: 20,
+                  height: 56,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.search_rounded,
+                        color: AppColors.textSecondary,
                       ),
-                    ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: TextField(
+                          onChanged: (val) =>
+                              ref.read(searchQueryProvider.notifier).state =
+                                  val,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
+                            hintText: 'Rechercher une boisson...',
+                            hintStyle: TextStyle(
+                              color: AppColors.textSecondary,
+                            ),
+                            border: InputBorder.none,
+                            isDense: true,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 12),
-                _FilterButton(
-                  isSelected: selectedCategory != null,
-                  onTap: () => _showCategoryPicker(context, ref),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 8),
+              // Horizontal Category List
+              const _CategorySelector(),
+              // Product List
+              Expanded(
+                child: products.isEmpty
+                    ? _EmptyInventory(
+                        onSeed: () => ref
+                            .read(inventoryProvider.notifier)
+                            .seedInitialData(),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.only(
+                          left: 24,
+                          right: 24,
+                          top: 12,
+                          bottom: 100,
+                        ),
+                        itemCount: products.length,
+                        itemBuilder: (context, index) {
+                          return _ProductCard(product: products[index]);
+                        },
+                      ),
+              ),
+            ],
           ),
-        ),
+        ],
       ),
-      body: products.isEmpty
-          ? _EmptyInventory(
-              onSeed: () =>
-                  ref.read(inventoryProvider.notifier).seedInitialData(),
-            )
-          : ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                return _ProductCard(product: products[index]);
-              },
-            ),
     );
   }
+}
 
-  void _showCategoryPicker(BuildContext context, WidgetRef ref) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: AppColors.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+class _CategorySelector extends ConsumerWidget {
+  const _CategorySelector();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedCategory = ref.watch(categoryFilterProvider);
+    final categories = ['Tout', 'Bière', 'Soda', 'Eau', 'Alcool', 'Divers'];
+
+    return SizedBox(
+      height: 60,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          final category = categories[index];
+          final isSelected =
+              (category == 'Tout' && selectedCategory == null) ||
+              (category == selectedCategory);
+
+          return Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: FilterChip(
+              label: Text(category),
+              selected: isSelected,
+              onSelected: (selected) {
+                ref.read(categoryFilterProvider.notifier).state =
+                    category == 'Tout' ? null : category;
+              },
+              selectedColor: AppColors.primaryOrange.withOpacity(0.2),
+              backgroundColor: Colors.transparent,
+              labelStyle: TextStyle(
+                color: isSelected
+                    ? AppColors.primaryOrange
+                    : AppColors.textSecondary,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(
+                  color: isSelected ? AppColors.primaryOrange : Colors.white10,
+                  width: 1,
+                ),
+              ),
+              showCheckmark: false,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            ),
+          );
+        },
       ),
-      builder: (context) {
-        final categories = ['Tout', 'Bière', 'Soda', 'Eau', 'Autre'];
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: categories.map((cat) {
-              return ListTile(
-                title: Text(cat),
-                onTap: () {
-                  ref.read(categoryFilterProvider.notifier).state =
-                      cat == 'Tout' ? null : cat;
-                  Navigator.pop(context);
-                },
-              );
-            }).toList(),
-          ),
-        );
-      },
     );
   }
 }
@@ -111,137 +192,159 @@ class _ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isCritical = product.stockQuantity <= product.criticalThreshold;
+    final stockLevel = product.stockQuantity <= product.criticalThreshold
+        ? 'CRITIQUE'
+        : product.stockQuantity <= product.criticalThreshold * 2
+        ? 'MOYEN'
+        : 'BON';
+
+    final statusColor = stockLevel == 'CRITIQUE'
+        ? AppColors.critical
+        : stockLevel == 'MOYEN'
+        ? AppColors.warning
+        : AppColors.success;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: GestureDetector(
-        onTap: () => context.push('/inventory/edit/${product.id}'),
-        child: GlassCard(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              // Realistic Image Placeholder
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.white12,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.local_drink_rounded,
-                  color: AppColors.primaryOrange,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      product.category,
-                      style: const TextStyle(
-                        color: AppColors.textSecondary,
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${product.salePrice.toInt()} FCFA',
-                      style: const TextStyle(
-                        color: AppColors.primaryOrange,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+      margin: const EdgeInsets.only(bottom: 20),
+      child: GlassCard(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            // Premium Product Image Container
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.white.withOpacity(0.05),
+                    Colors.white.withOpacity(0.01),
                   ],
                 ),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.white10),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  if (isCritical)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.critical.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Text(
-                        'ALERTE',
-                        style: TextStyle(
-                          color: AppColors.critical,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Text(
-                        '${product.stockQuantity}',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: isCritical
-                              ? AppColors.critical
-                              : AppColors.success,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(
-                        Icons.chevron_right_rounded,
-                        color: AppColors.textSecondary,
-                      ),
-                    ],
+                  Icon(
+                    product.category == 'Bière'
+                        ? Icons.sports_bar_rounded
+                        : Icons.local_drink_rounded,
+                    size: 40,
+                    color: AppColors.primaryOrange.withOpacity(0.6),
                   ),
-                  const Text(
-                    'en stock',
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: AppColors.textSecondary,
+                  // Glow Effect
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primaryOrange.withOpacity(0.1),
+                          blurRadius: 20,
+                          spreadRadius: 2,
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _FilterButton extends StatelessWidget {
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _FilterButton({required this.isSelected, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.primaryOrange : AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Icon(
-          Icons.filter_list_rounded,
-          color: isSelected ? Colors.white : AppColors.textSecondary,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          product.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () =>
+                            context.push('/inventory/edit/${product.id}'),
+                        icon: const Icon(
+                          Icons.edit_note_rounded,
+                          color: AppColors.textSecondary,
+                          size: 20,
+                        ),
+                        visualDensity: VisualDensity.compact,
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    product.category,
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 13,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '${product.salePrice.toInt()} FCFA',
+                    style: const TextStyle(
+                      color: AppColors.primaryOrange,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: statusColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: statusColor.withOpacity(0.3)),
+                  ),
+                  child: Text(
+                    stockLevel,
+                    style: TextStyle(
+                      color: statusColor,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '${product.stockQuantity}',
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Text(
+                  'UNITÉS',
+                  style: TextStyle(
+                    fontSize: 9,
+                    color: AppColors.textSecondary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -258,25 +361,38 @@ class _EmptyInventory extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.inventory_2_outlined,
-            size: 80,
-            color: AppColors.textSecondary,
-          ),
-          const SizedBox(height: 16),
-          const Text(
-            'Aucun produit trouvé',
-            style: TextStyle(color: AppColors.textSecondary, fontSize: 18),
+            size: 100,
+            color: Colors.white.withOpacity(0.1),
           ),
           const SizedBox(height: 24),
-          ElevatedButton(
+          const Text(
+            'Votre stock est vide',
+            style: TextStyle(
+              color: AppColors.textSecondary,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Ajoutez votre premier produit\nou importez la démo.',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+          ),
+          const SizedBox(height: 32),
+          ElevatedButton.icon(
             onPressed: onSeed,
+            icon: const Icon(Icons.download_rounded),
+            label: const Text('IMPORTER DÉMO'),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryOrange,
-            ),
-            child: const Text(
-              'Importer démo',
-              style: TextStyle(color: Colors.white),
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
             ),
           ),
         ],
